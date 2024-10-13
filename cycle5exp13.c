@@ -6,24 +6,24 @@ typedef struct StudentNode {
     int number;                    
     char name[50];                
     float total_marks;             
-    struct StudentNode* next;     
+    struct StudentNode* link;     
 } StudentNode;
 
-void insertStudent(StudentNode** head, int number, const char* name, float total_marks) {
+void insertStudent(StudentNode** header, int number, const char* name, float total_marks) {
      StudentNode* newNode = (StudentNode*)malloc(sizeof(StudentNode));
     newNode->number = number;
     strcpy(newNode->name, name);
     newNode->total_marks = total_marks;
-    newNode->next = *head; 
-    *head = newNode; 
+    newNode->link = *header; 
+    *header = newNode; 
 }
 
-void deleteStudent(StudentNode** head, int number) {
-    StudentNode* current = *head;
+void deleteStudent(StudentNode** header, int number) {
+    StudentNode* current = *header;
     StudentNode* previous = NULL;
     while (current != NULL && current->number != number) {
         previous = current;
-        current = current->next;
+        current = current->link;
     }
     if (current == NULL) {
         printf("Student with number %d not found.\n", number);
@@ -31,25 +31,25 @@ void deleteStudent(StudentNode** head, int number) {
     }
 
     else {
-        previous->next = current->next;
+        previous->link = current->link;
     }
     free(current);
     printf("Student with number %d deleted.\n", number);
 }
 
-StudentNode* searchStudent(StudentNode* head, const char* name, int number) {
-    StudentNode* current = head;
+StudentNode* searchStudent(StudentNode* header, const char* name, int number) {
+    StudentNode* current = header;
     while (current != NULL) {
         if ((name != NULL && strcmp(current->name, name) == 0) || (number != -1 && current->number == number)) {
             return current; 
         }
-        current = current->next;
+        current = current->link;
     }
     return NULL; 
 }
 
-void sortStudents(StudentNode** head) {
-    if (*head == NULL) {
+void sortStudents(StudentNode** header) {
+    if (*header == NULL) {
         return; 
     }
 
@@ -58,44 +58,44 @@ void sortStudents(StudentNode** head) {
     char tempName[50];
     float tempMarks;
 
-    for (i = *head; i != NULL; i = i->next) {
-        for (j = *head; j->next != NULL; j = j->next) {
-            if (j->number > j->next->number) {
+    for (i = *header; i != NULL; i = i->link) {
+        for (j = *header; j->link != NULL; j = j->link) {
+            if (j->number > j->link->number) {
 
                 tempNumber = j->number;
-                j->number = j->next->number;
-                j->next->number = tempNumber;
+                j->number = j->link->number;
+                j->link->number = tempNumber;
 
                 strcpy(tempName, j->name);
-                strcpy(j->name, j->next->name);
-                strcpy(j->next->name, tempName);
+                strcpy(j->name, j->link->name);
+                strcpy(j->link->name, tempName);
 
                 tempMarks = j->total_marks;
-                j->total_marks = j->next->total_marks;
-                j->next->total_marks = tempMarks;
+                j->total_marks = j->link->total_marks;
+                j->link->total_marks = tempMarks;
             }
         }
     }
 }
 
-void displayStudents(StudentNode* head) {
-    if (head == NULL) {
+void displayStudents(StudentNode* header) {
+    if (header == NULL) {
         printf("No students in the list.\n");
         return;
     }
 
     printf("Student List:\n");
-    printf("Number\tName\t\tTotal Marks\n");
+    printf("Number\tName\tTotal Marks\n");
     printf("-------------------------------------\n");
-    StudentNode* current = head;
+    StudentNode* current = header;
     while (current != NULL) {
         printf("%d\t%s\t\t%.2f\n", current->number, current->name, current->total_marks);
-        current = current->next;
+        current = current->link;
     }
 }
 
 int main() {
-    StudentNode* head = NULL; 
+    StudentNode* header = NULL; 
     int choice, number;
     char name[50];
     float total_marks;
@@ -114,12 +114,12 @@ int main() {
             case 1:
                 printf("Enter student number, name, and total marks: ");
                 scanf("%d %s %f", &number, name, &total_marks);
-                insertStudent(&head, number, name, total_marks);
+                insertStudent(&header, number, name, total_marks);
                 break;
             case 2:
                 printf("Enter student number to delete: ");
                 scanf("%d", &number);
-                deleteStudent(&head, number);
+                deleteStudent(&header, number);
                 break;
             case 3:
                 printf("Enter student number to search (or -1 for name search): ");
@@ -131,19 +131,19 @@ int main() {
                     name[0] = '\0'; 
                 }
 
-                StudentNode* foundStudent = searchStudent(head, name[0] ? name : NULL, number);
+                StudentNode* foundStudent = searchStudent(header, name[0] ? name : NULL, number);
                 if (foundStudent != NULL) {
-                    printf("Student found: %d %s %.2f\n", foundStudent->number, foundStudent->name, foundStudent->total_marks);
+                    printf("Student found: %d %s %f\n", foundStudent->number, foundStudent->name, foundStudent->total_marks);
                 } else {
                     printf("Student not found.\n");
                 }
                 break;
             case 4:
-                sortStudents(&head);
+                sortStudents(&header);
                 printf("Students sorted by number.\n");
                 break;
             case 5:
-                displayStudents(head);
+                displayStudents(header);
                 break;
         }
     } while (choice != 0);
