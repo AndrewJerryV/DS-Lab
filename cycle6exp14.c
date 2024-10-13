@@ -89,7 +89,7 @@ int main() {
     printf("3. Inorder traversal\n");
     printf("4. Preorder traversal\n");
     printf("5. Postorder traversal\n");
-    printf("6. Exit");
+    printf("0. Exit");
     while (1) {
         
         printf("\nEnter your choice: ");
