@@ -49,14 +49,6 @@ void postorderTraversal(struct Node* root) {
     printf("%d ", root->data);
 }
 
-struct Node* findMinNode(struct Node* node) {
-    struct Node* current = node;
-    while (current && current->left != NULL) {
-        current = current->left;
-    }
-    return current;
-}
-
 struct Node* deleteNode(struct Node* root, int data) {
     if (root == NULL) {
         return root;
