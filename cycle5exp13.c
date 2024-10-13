@@ -19,31 +19,31 @@ void insertStudent(StudentNode** header, int number, const char* name, float tot
 }
 
 void deleteStudent(StudentNode** header, int number) {
-    StudentNode* current = *header;
+    StudentNode* ptr = *header;
     StudentNode* previous = NULL;
-    while (current != NULL && current->number != number) {
-        previous = current;
-        current = current->link;
+    while (ptr != NULL && ptr->number != number) {
+        previous = ptr;
+        ptr = ptr->link;
     }
-    if (current == NULL) {
+    if (ptr == NULL) {
         printf("Student with number %d not found.\n", number);
         return; 
     }
 
     else {
-        previous->link = current->link;
+        previous->link = ptr->link;
     }
-    free(current);
+    free(ptr);
     printf("Student with number %d deleted.\n", number);
 }
 
 StudentNode* searchStudent(StudentNode* header, const char* name, int number) {
-    StudentNode* current = header;
-    while (current != NULL) {
-        if ((name != NULL && strcmp(current->name, name) == 0) || (number != -1 && current->number == number)) {
-            return current; 
+    StudentNode* ptr = header;
+    while (ptr != NULL) {
+        if ((name != NULL && strcmp(ptr->name, name) == 0) || (number != -1 && ptr->number == number)) {
+            return ptr; 
         }
-        current = current->link;
+        ptr = ptr->link;
     }
     return NULL; 
 }
@@ -87,10 +87,10 @@ void displayStudents(StudentNode* header) {
     printf("Student List:\n");
     printf("Number\tName\tTotal Marks\n");
     printf("-------------------------------------\n");
-    StudentNode* current = header;
-    while (current != NULL) {
-        printf("%d\t%s\t\t%.2f\n", current->number, current->name, current->total_marks);
-        current = current->link;
+    StudentNode* ptr = header;
+    while (ptr != NULL) {
+        printf("%d\t%s\t\t%.2f\n", ptr->number, ptr->name, ptr->total_marks);
+        ptr = ptr->link;
     }
 }
 
@@ -146,7 +146,7 @@ int main() {
                 displayStudents(header);
                 break;
         }
-    } while (choice != 0);
-
+    } 
+    while (choice != 0);
     return 0;
 }
