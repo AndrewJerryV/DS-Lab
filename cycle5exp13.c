@@ -29,10 +29,7 @@ void deleteStudent(StudentNode** head, int number) {
         printf("Student with number %d not found.\n", number);
         return; 
     }
-    // if (previous == NULL) {
-    //     // Deleting the head node
-    //     *head = current->next;
-    // } 
+
     else {
         previous->next = current->next;
     }
@@ -40,22 +37,20 @@ void deleteStudent(StudentNode** head, int number) {
     printf("Student with number %d deleted.\n", number);
 }
 
-// Function to search for a student based on name or number
 StudentNode* searchStudent(StudentNode* head, const char* name, int number) {
     StudentNode* current = head;
     while (current != NULL) {
         if ((name != NULL && strcmp(current->name, name) == 0) || (number != -1 && current->number == number)) {
-            return current; // Student found
+            return current; 
         }
         current = current->next;
     }
-    return NULL; // Student not found
+    return NULL; 
 }
 
-// Function to sort the linked list based on student number
 void sortStudents(StudentNode** head) {
     if (*head == NULL) {
-        return; // List is empty
+        return; 
     }
 
     StudentNode *i, *j;
@@ -63,11 +58,10 @@ void sortStudents(StudentNode** head) {
     char tempName[50];
     float tempMarks;
 
-    // Bubble sort
     for (i = *head; i != NULL; i = i->next) {
         for (j = *head; j->next != NULL; j = j->next) {
             if (j->number > j->next->number) {
-                // Swap the data
+
                 tempNumber = j->number;
                 j->number = j->next->number;
                 j->next->number = tempNumber;
@@ -84,7 +78,6 @@ void sortStudents(StudentNode** head) {
     }
 }
 
-// Function to display the list of students
 void displayStudents(StudentNode* head) {
     if (head == NULL) {
         printf("No students in the list.\n");
@@ -102,7 +95,7 @@ void displayStudents(StudentNode* head) {
 }
 
 int main() {
-    StudentNode* head = NULL; // Initialize the head of the linked list
+    StudentNode* head = NULL; 
     int choice, number;
     char name[50];
     float total_marks;
@@ -135,7 +128,7 @@ int main() {
                     printf("Enter name to search: ");
                     scanf("%s", name);
                 } else {
-                    name[0] = '\0'; // Clear name if searching by number
+                    name[0] = '\0'; 
                 }
 
                 StudentNode* foundStudent = searchStudent(head, name[0] ? name : NULL, number);
