@@ -37,16 +37,13 @@ void display() {
 
 int main() {
     int choice, element;
-
+    printf("1. Insert element into queue\n");
+    printf("2. Delete element from queue\n");
+    printf("3. Display queue\n");
+    printf("0. Exit");
     do {
-        printf("\nMenu:\n");
-        printf("1. Insert element into queue\n");
-        printf("2. Delete element from queue\n");
-        printf("3. Display queue\n");
-        printf("0. Exit\n");
-        printf("Enter your choice: ");
+        printf("\nEnter your choice: ");
         scanf("%d", &choice);
-
         switch (choice) {
             case 1:
                 printf("Enter the element to insert: ");
@@ -62,7 +59,6 @@ int main() {
                 display();
                 break;
             case 0:
-                printf("Exiting...\n");
                 break;
             default:
                 printf("Invalid choice! Please enter a valid option.\n");
