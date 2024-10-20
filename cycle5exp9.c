@@ -10,9 +10,6 @@ node* front;
 node* rear;
 node* top;
 
-node* queue;
-node* stack;
-
 void enqueue(int data) {
     node* newnode = (node*) malloc(sizeof(node));
     if(newnode==NULL)
@@ -79,23 +76,7 @@ void displayQueue() {
     printf("\n");
 }
 
-void displayStack() {
-    node* ptr = top;
-    if (ptr == NULL) {
-        printf("Stack is empty\n");
-        return;
-    }
-    printf("Stack contents: ");
-    while (ptr != NULL) {
-        printf("%d\n", ptr->data);
-        ptr = ptr->link;
-    }
-}
-
 void main() {
-    queue = (node*) malloc(sizeof(node));
-    stack = (node*) malloc(sizeof(node));
-
     top = NULL;
     front = rear = NULL;
     int value, qsize;
