@@ -3,45 +3,23 @@
 
 #define MAX 100
 
-typedef struct Node {
-    int vertex;
-    struct Node* link;
-} Node;
-
-Node* createNode(int v) {
-    Node* newNode = malloc(sizeof(Node));
-    newNode->vertex = v;
-    newNode->link = NULL;
-    return newNode;
+void addEdge(int adjMatrix[MAX][MAX], int src, int dest) {
+    adjMatrix[src][dest] = 1;
+    adjMatrix[dest][src] = 1;
 }
 
-void addEdge(Node* adjLists[], int src, int dest) {
-    Node* newNode = createNode(dest);
-    newNode->link = adjLists[src];
-    adjLists[src] = newNode;
-
-    newNode = createNode(src);
-    newNode->link = adjLists[dest];
-    adjLists[dest] = newNode;
-}
-
-void DFS(Node* adjLists[], int vertex, int visited[]) {
+void DFS(int adjMatrix[MAX][MAX], int vertex, int visited[], int vertices) {
     visited[vertex] = 1;
     printf("%d ", vertex);
-
-    Node* temp = adjLists[vertex];
-    while (temp != NULL) {
-        int connectedVertex = temp->vertex;
-        if (visited[connectedVertex] == 0) {
-            DFS(adjLists, connectedVertex, visited);
+    for (int i = 0; i < vertices; i++) {
+        if (adjMatrix[vertex][i] == 1 && !visited[i]) {
+            DFS(adjMatrix, i, visited, vertices);
         }
-        temp = temp->link;
     }
 }
 
-void BFS(Node* adjLists[], int startVertex, int visited[]) {
-    int queue[MAX];
-    int front = 0, rear = 0;
+void BFS(int adjMatrix[MAX][MAX], int startVertex, int visited[], int vertices) {
+    int queue[MAX], front = 0, rear = 0;
 
     visited[startVertex] = 1;
     queue[rear++] = startVertex;
@@ -49,43 +27,56 @@ void BFS(Node* adjLists[], int startVertex, int visited[]) {
     while (front < rear) {
         int currentVertex = queue[front++];
         printf("%d ", currentVertex);
-
-        Node* temp = adjLists[currentVertex];
-        while (temp) {
-            int adjVertex = temp->vertex;
-
-            if (visited[adjVertex] == 0) {
-                visited[adjVertex] = 1;
-                queue[rear++] = adjVertex;
+        for (int i = 0; i < vertices; i++) {
+            if (adjMatrix[currentVertex][i] == 1 && !visited[i]) {
+                visited[i] = 1;
+                queue[rear++] = i;
             }
-            temp = temp->link;
         }
     }
 }
 
-
 int main() {
-    int vertices = 8;
-    Node* adjLists[MAX] = {NULL}; 
-    int visited[MAX] = {0};      
+    int vertices, choice, src, dest, startVertex;
+    int adjMatrix[MAX][MAX] = {0};
+    int visited[MAX] = {0};
 
-    addEdge(adjLists, 0, 1);
-    addEdge(adjLists, 0, 2);
-    addEdge(adjLists, 0, 3);
-    addEdge(adjLists, 1, 4);
-    addEdge(adjLists, 1, 5);
-    addEdge(adjLists, 2, 6);
-    addEdge(adjLists, 3, 7);
+    printf("Enter number of vertices: ");
+    scanf("%d", &vertices);
+    printf("1.Add Edge\n2.DFS\n3.BFS\n0.Exit");
 
-    printf("Depth First Search: ");
-    DFS(adjLists, 0, visited);
-
-    for (int i = 0; i < vertices; i++) {
-        visited[i] = 0;
+    while (1) {
+        printf("\nEnter choice: ");
+        scanf("%d", &choice);
+        switch (choice) {
+            case 1:
+                printf("Enter source and destination vertices: ");
+                scanf("%d %d", &src, &dest);
+                addEdge(adjMatrix, src, dest);
+                break;
+            case 2:
+                printf("Enter starting vertex: ");
+                scanf("%d", &startVertex);
+                for (int i = 0; i < vertices; i++) {
+                    visited[i] = 0;
+                }
+                printf("Depth First Search: ");
+                DFS(adjMatrix, startVertex, visited, vertices);
+                printf("\n");
+                break;
+            case 3:
+                printf("Enter starting vertex: ");
+                scanf("%d", &startVertex);
+                for (int i = 0; i < vertices; i++) {
+                    visited[i] = 0;
+                }
+                printf("Breadth First Search: ");
+                BFS(adjMatrix, startVertex, visited, vertices);
+                printf("\n");
+                break;
+            case 0:
+                exit(0);
+        }
     }
-
-    printf("\nBreadth First Search: ");
-    BFS(adjLists, 0, visited);
-
     return 0;
 }
