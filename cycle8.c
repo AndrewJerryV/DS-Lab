@@ -153,31 +153,46 @@ void heapSort(int arr[], int n) {
 }
 
 int main() {
-    int n, choice;
-    printf("Enter the number of elements: ");
-    scanf("%d", &n);
 
-    int arr[n];
-    printf("Enter the elements: ");
-    for (int i = 0; i < n; i++) {
-        scanf("%d", &arr[i]);
-    }
+int ch, n;
 
-    bubbleSort(arr, n);
+printf("1.Bubble Sort\n2.Insertion sort\n3.Selection Sort\n4.Quick sort\n5.MergeSort\n6.HeapSort\n");
 
-    insertionSort(arr, n);
+do{
 
-    selectionSort(arr, n);
+printf("Enter the number of elements: ");
 
-    quickSort(arr, 0, n - 1);
-    printf("Sorted array (Quick Sort): ");
-    display(arr, n);
+scanf("%d", &n);
 
-    mergeSort(arr, 0, n - 1);
-    printf("Sorted array (Merge Sort): ");
-    display(arr, n);
+int arr[n];
 
-    heapSort(arr, n);
+printf("Enter elements: ");
 
-    return 0;
+for (int i = 0; i < n; i++) {
+
+scanf("%d", &arr[i]); }
+
+printf("Enter choice: "); scanf("%d", &ch);
+
+switch(ch)
+
+{
+
+case 1: bubbleSort(arr,n); break;
+
+case 2: insertionSort(arr,n); break;
+
+case 3: selectionSort(arr,n); break;
+
+case 4: quickSort(arr,0,-1); printf("Quick Sort: "); display(arr,n); break;
+
+case 5: mergeSort(arr,0,n-1); printf("Merge Sort: "); display(arr, n); break;
+
+case 6: heapSort(arr,n); break;
+
+case 0: break;
+
+} }while(chl=0);
+
+return 0;
 }
