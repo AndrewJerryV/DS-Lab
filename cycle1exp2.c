@@ -1,39 +1,29 @@
 #include<stdio.h>
 #include<string.h>
 
-void display(char str[]){
-    int i=0;
-    while(str[i]!='\0'){
-        printf("%c", str[i++]);
-    }
-    printf("\n");
-}
-
-void substring(char str[], int ck[]) {
-    int length = strlen(str);
-    char c[length];
-    int s=0;
-    for (int i = 0; i < length; i++) {
-        for (int j = i; j < length; j++) {
-            for (int k = i; k <= j; k++) {
-                if(ck[str[k]] != 0){
-                    break;
-                }  
-                c[s++]=str[k];
-                ck[str[k]] = 1;
+void substring(char str[]){
+    int len = strlen(str);
+    char c[len];
+    int checklist[256] = {0};
+    int n =0,k = 0;
+    for(int i=0;i<len;i++){
+        for(int j=i;j<len;j++){
+            for(k=i;k<j;k++){
+                if(checklist[str[k]]!=0){
+                    break;           
+                }   
+                c[n++] = str[k];
+                checklist[str[k]] = 1;       
             }
         }
     }
-    c[s++]='\0';
-    display(c);
+    c[n] = '\0';
+    printf("Longest Substring: %s\n", c);
+    printf("Length Longest substring: %d", strlen(c));
 
 }
 
-int main(){
-    char str[] = "abcabcd";
-    display(str);
-    int checklist[256] = {0};
-
-    substring(str, checklist);
-
+void main(){
+    char str[] = "abcabcdefabcde";
+    substring(str);
 }
