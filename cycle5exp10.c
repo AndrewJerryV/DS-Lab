@@ -12,11 +12,23 @@ PolyNode* header2;
 PolyNode* header3;
 
 void insertTerm(PolyNode* header, int coeff, int exp) {
-    PolyNode* newNode = (PolyNode*) malloc(sizeof(PolyNode));
-    newNode->coeff = coeff;
-    newNode->exp = exp;
-    newNode->link = header->link;
-    header->link = newNode;
+    node* newnode = (node*) malloc(sizeof(node));
+    newnode->coeff = coeff;
+    newnode->exp = exp;
+    newnode->link = NULL;
+
+    node* ptr = header;
+    while (ptr->link != NULL && ptr->link->exp > exp) {
+        ptr = ptr->link;
+    }
+
+    if (ptr->link != NULL && ptr->link->exp == exp) {
+        ptr->link->coeff += coeff;
+        free(newnode);
+    } else {
+        newnode->link = ptr->link;
+        ptr->link = newnode;
+    }
 }
 
 void displayPolynomial(PolyNode* header) {
