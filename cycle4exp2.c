@@ -67,7 +67,7 @@ void transpose(struct tuple tup[]){
     int q=1;
     if(n>0){
         for(int i=0;i<tup[0].col;i++){
-            for(int j=1;j<=n;j++){
+            for(int j=i;j<=n;j++){
                 if(tup[j].col == i){
                     trans[q].row = tup[j].col;
                     trans[q].col = tup[j].row;
