@@ -3,24 +3,20 @@
 
 #define MAX_TERMS 100
 
-// Structure to represent a term in the polynomial
 typedef struct {
     int coefficient;
     int exponent;
 } Term;
 
-// Function to read a polynomial from the user
 void readPolynomial(Term poly[], int *numTerms) {
     printf("Enter the number of terms in the polynomial: ");
     scanf("%d", numTerms);
-
     for (int i = 0; i < *numTerms; i++) {
         printf("Enter coefficient and exponent of term %d: ", i + 1);
         scanf("%d %d", &poly[i].coefficient, &poly[i].exponent);
     }
 }
 
-// Function to display a polynomial
 void displayPolynomial(Term poly[], int numTerms) {
     for (int i = 0; i < numTerms; i++) {
         if (i != 0 && poly[i].coefficient > 0) {
@@ -37,7 +33,6 @@ void displayPolynomial(Term poly[], int numTerms) {
     printf("\n");
 }
 
-// Function to add two polynomials
 void addPolynomials(Term poly1[], int numTerms1, Term poly2[], int numTerms2, Term result[], int *numTermsResult) {
     int index1 = 0, index2 = 0, indexResult = 0;
 
